@@ -14,6 +14,7 @@ body {
 
 h1 { color: #ff4d88; }
 
+/* DEFAULT IMAGE STYLE (GIFS) */
 img {
     width: 250px;
     height: 250px;
@@ -22,6 +23,13 @@ img {
     object-fit: cover;
 }
 
+/* FINAL IMAGE ONLY (NO CROPPING) */
+.full-image {
+    object-fit: contain !important;
+    background: #ffe6f0;
+}
+
+/* BUTTONS */
 button {
     padding: 10px 20px;
     font-size: 18px;
@@ -125,7 +133,6 @@ document.head.appendChild(style);
 /* NO click */
 noBtn.addEventListener("click", () => {
 
-    // 👉 START MUSIC HERE (your requirement)
     if (!musicStarted) {
         music.play().catch(()=>{});
         musicStarted = true;
@@ -134,6 +141,9 @@ noBtn.addEventListener("click", () => {
     noCount++;
     question.innerText = noTexts[noCount % noTexts.length];
     img.src = images[noCount % images.length];
+
+    /* REMOVE FINAL IMAGE STYLE if coming back to GIFs */
+    img.classList.remove("full-image");
 
     let size = parseInt(window.getComputedStyle(yesBtn).fontSize);
     yesBtn.style.fontSize = (size + 6) + "px";
@@ -146,7 +156,12 @@ noBtn.addEventListener("click", () => {
 /* YES click */
 yesBtn.addEventListener("click", () => {
     question.innerText = "Yayyyy!!! I knew it, n that biggg booty is mine.. 💖🥰";
+
     img.src = "images/me.jpeg";
+
+    /* APPLY FULL IMAGE STYLE ONLY HERE */
+    img.classList.add("full-image");
+
     noBtn.style.display = "none";
 
     setInterval(createHeart, 200);
